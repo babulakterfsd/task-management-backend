@@ -17,6 +17,8 @@ router.post(
 
 router.post('/login', validateRequest(loginSchema), UserControllers.loginUser);
 
+router.post('/refresh-token', UserControllers.getAccessTokenUsingRefreshToken);
+
 router.post(
   '/change-password',
   validateRequest(changePasswordSchema),

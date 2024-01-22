@@ -23,7 +23,7 @@
 
 ### live link
 
-- https://task-management-babulakterfsd.vercel.app
+- https://task-management-of-babul.vercel.app
 
 ### DEMO LOGIN DETAILS
 

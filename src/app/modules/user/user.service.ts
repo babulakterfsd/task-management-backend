@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-unsafe-optional-chaining */
 import bcrypt from 'bcrypt';
-import jwt, { JsonWebTokenError } from 'jsonwebtoken';
+import httpStatus from 'http-status';
+import jwt, { JsonWebTokenError, JwtPayload } from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import config from '../../config';
+import AppError from '../../errors/AppError';
 import {
   TChangePasswordData,
   TDecodedUser,
@@ -81,9 +83,50 @@ const loginUser = async (user: TUser) => {
     expiresIn: config.jwt_access_expires_in,
   });
 
+  const refreshfToken = jwt.sign(payload, config.jwt_refresh_secret as string, {
+    expiresIn: config.jwt_refresh_expires_in,
+  });
+
   return {
     accesstoken,
+    refreshfToken,
     userFromDB,
+  };
+};
+
+//generate refresh token
+const getAccessTokenByRefreshToken = async (token: string) => {
+  if (!token) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'Refresh token is required');
+  }
+
+  const decoded =
+    (jwt.verify(
+      token as string,
+      config.jwt_refresh_secret as string,
+    ) as JwtPayload) || 'failed to verify';
+
+  const { id, role, email } = decoded;
+
+  // checking if the user is exist
+  const user = await UserModel.isUserExistsWithEmail(email);
+
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Unauthorized Access!');
+  }
+
+  const payload = {
+    id,
+    role,
+    email,
+  };
+
+  const accessToken = jwt.sign(payload, config.jwt_access_secret as string, {
+    expiresIn: config.jwt_access_expires_in,
+  });
+
+  return {
+    accessToken,
   };
 };
 
@@ -195,5 +238,6 @@ const changePasswordInDB = async (
 export const UserServices = {
   registerUserInDB,
   loginUser,
+  getAccessTokenByRefreshToken,
   changePasswordInDB,
 };

@@ -21,7 +21,12 @@ const createUser = catchAsync(async (req, res) => {
 //login user
 const loginUser = catchAsync(async (req, res) => {
   const result = await UserServices.loginUser(req.body);
-  const { accesstoken, userFromDB } = result;
+  const { accesstoken, refreshfToken, userFromDB } = result;
+
+  res.cookie('refreshfToken', refreshfToken, {
+    secure: config.NODE_ENV === 'production',
+    httpOnly: true,
+  });
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -36,6 +41,19 @@ const loginUser = catchAsync(async (req, res) => {
       },
       token: accesstoken,
     },
+  });
+});
+
+const getAccessTokenUsingRefreshToken = catchAsync(async (req, res) => {
+  const result = await UserServices.getAccessTokenByRefreshToken(
+    req.cookies?.refreshfToken,
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Access token retrieved succesfully!',
+    data: result,
   });
 });
 
@@ -66,5 +84,6 @@ const changePassword = catchAsync(async (req, res) => {
 export const UserControllers = {
   createUser,
   loginUser,
+  getAccessTokenUsingRefreshToken,
   changePassword,
 };
