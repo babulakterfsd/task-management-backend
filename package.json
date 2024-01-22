@@ -1,7 +1,7 @@
 {
-  "name": "course-review-system-with-auth",
+  "name": "task-management-system",
   "version": "1.0.0",
-  "description": "create apis for course-review-system-with-auth",
+  "description": "create apis for task-management-system",
   "main": "index.js",
   "scripts": {
     "start:prod": "node ./dist/server.js",

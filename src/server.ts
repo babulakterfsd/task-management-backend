@@ -26,7 +26,7 @@ main();
 //if any error happens in async code, it will be caught here
 process.on('unhandledRejection', () => {
   console.log(
-    `unahandledRejection is detected , course review server is shutting down ...`,
+    `unahandledRejection is detected , task management server is shutting down ...`,
   );
   if (server) {
     server.close(() => {
@@ -39,7 +39,7 @@ process.on('unhandledRejection', () => {
 //if any error happens in sync code, it will be caught here
 process.on('uncaughtException', () => {
   console.log(
-    `uncaughtException is detected , course review server is shutting down ...`,
+    `uncaughtException is detected , task management server is shutting down ...`,
   );
   process.exit(1);
 });

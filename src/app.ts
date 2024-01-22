@@ -16,7 +16,7 @@ app.get('/', (req: Request, res: Response) => {
   res.status(httpStatus.OK).json({
     success: true,
     statusCode: httpStatus.OK,
-    message: 'Welcome to Course Review System Server',
+    message: 'Welcome to Task Management System Server',
     data: null,
   });
 });

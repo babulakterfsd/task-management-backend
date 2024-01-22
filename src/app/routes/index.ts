@@ -1,8 +1,6 @@
 import { Router } from 'express';
-import { CategoryRoutes } from '../modules/category/category.route';
-import { CourseRoutes } from '../modules/course/course.route';
-import { CoursesRoutes } from '../modules/course/courses.route';
-import { ReviewRoutes } from '../modules/review/review.route';
+
+import { TodoRoutes } from '../modules/todo/todo.route';
 import { UserRoutes } from '../modules/user/user.route';
 
 const router = Router();
@@ -13,20 +11,8 @@ const moduleRoutes = [
     route: UserRoutes,
   },
   {
-    path: '/categories',
-    route: CategoryRoutes,
-  },
-  {
-    path: '/course',
-    route: CourseRoutes,
-  },
-  {
-    path: '/courses',
-    route: CoursesRoutes,
-  },
-  {
-    path: '/reviews',
-    route: ReviewRoutes,
+    path: '/todos',
+    route: TodoRoutes,
   },
 ];
 
