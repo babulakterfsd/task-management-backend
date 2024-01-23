@@ -17,6 +17,7 @@ app.use(
       'http://localhost:5173',
       'https://task-management-of-babul.vercel.app',
     ],
+    credentials: true,
   }),
 );
 
