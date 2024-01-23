@@ -40,7 +40,7 @@ export const userSchema = z.object({
 });
 
 export const loginSchema = z.object({
-  username: z.string({
+  email: z.string({
     invalid_type_error: ' must be string',
     required_error: ' is required',
   }),

@@ -60,9 +60,9 @@ const registerUserInDB = async (user: TUser) => {
 
 // login user
 const loginUser = async (user: TUser) => {
-  const userFromDB = await UserModel.isUserExistsWithUsername(user?.username);
+  const userFromDB = await UserModel.isUserExistsWithEmail(user?.email);
   if (!userFromDB) {
-    throw new Error('No user found with this username');
+    throw new Error('No user found with this email');
   }
   const isPasswordMatched = await bcrypt.compare(
     user?.password,
