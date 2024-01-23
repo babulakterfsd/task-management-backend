@@ -28,9 +28,9 @@
 ### DEMO LOGIN DETAILS
 
 - (user) :
-  username: xpawal
+  email: xpawal@gmail.com
   password: awal123
 
 - (admin) :
-  username: babulakterfsd
+  email: babulakterfsd@gmail.com
   password: babul123
