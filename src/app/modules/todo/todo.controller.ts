@@ -28,6 +28,25 @@ const getAllTodos: RequestHandler = catchAsync(async (req, res) => {
   });
 });
 
+//get all todos for an specific user
+const getAllTodosForASpecificUser: RequestHandler = catchAsync(
+  async (req, res) => {
+    const { email } = req.params;
+    console.log('email in controller is', email);
+
+    const result = await TodoServices.getAllTodosForASpecificUserFromDB(
+      email as string,
+    );
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Todos have been retrieved succesfully',
+      data: result,
+    });
+  },
+);
+
 //update a todo
 const updateTodo: RequestHandler = catchAsync(async (req, res) => {
   const result = await TodoServices.updateTodoInDB(req.params.id, req.body);
@@ -55,6 +74,7 @@ const deleteTodo: RequestHandler = catchAsync(async (req, res) => {
 export const TodoControllers = {
   createTodo,
   getAllTodos,
+  getAllTodosForASpecificUser,
   updateTodo,
   deleteTodo,
 };

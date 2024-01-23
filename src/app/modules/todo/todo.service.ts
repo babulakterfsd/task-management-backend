@@ -21,6 +21,18 @@ const getAllTodosFromDB = async () => {
   }
 };
 
+// get all todos from db
+const getAllTodosForASpecificUserFromDB = async (email: string) => {
+  console.log('email in service is', email);
+
+  const result = await TodoModel.find({ createdBy: email });
+  if (!result) {
+    throw new Error('Failed to get todos for this user');
+  } else {
+    return result;
+  }
+};
+
 //update a todo in db
 const updateTodoInDB = async (id: string, requestBody: TTodo) => {
   const todoToBeUpdated = await TodoModel.findOne({ id: id });
@@ -53,6 +65,7 @@ const deleteTodoFromDB = async (id: string) => {
 export const TodoServices = {
   createTodoInDB,
   getAllTodosFromDB,
+  getAllTodosForASpecificUserFromDB,
   updateTodoInDB,
   deleteTodoFromDB,
 };

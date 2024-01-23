@@ -17,4 +17,10 @@ export const todoSchema = z.object({
     .min(9)
     .max(20),
   isCompleted: z.boolean(),
+  createdBy: z
+    .string({
+      invalid_type_error: 'Created by must be a string',
+      required_error: 'Created by is required',
+    })
+    .min(5),
 });

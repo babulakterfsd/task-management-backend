@@ -9,6 +9,8 @@ router.put('/:id', TodoControllers.updateTodo);
 
 router.delete('/:id', TodoControllers.deleteTodo);
 
+router.get('/:email', TodoControllers.getAllTodosForASpecificUser);
+
 router.post('/', validateRequest(todoSchema), TodoControllers.createTodo);
 
 router.get('/', TodoControllers.getAllTodos);

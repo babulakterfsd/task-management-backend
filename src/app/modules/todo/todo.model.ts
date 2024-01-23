@@ -24,6 +24,11 @@ const todoSchema = new Schema<TTodo>(
       type: Boolean,
       default: false,
     },
+    createdBy: {
+      type: String,
+      minlength: 5,
+      required: true,
+    },
   },
   {
     timestamps: true,
