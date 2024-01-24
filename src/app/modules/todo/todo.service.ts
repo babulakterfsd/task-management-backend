@@ -23,8 +23,6 @@ const getAllTodosFromDB = async () => {
 
 // get all todos from db
 const getAllTodosForASpecificUserFromDB = async (email: string) => {
-  console.log('email in service is', email);
-
   const result = await TodoModel.find({ createdBy: email });
   if (!result) {
     throw new Error('Failed to get todos for this user');

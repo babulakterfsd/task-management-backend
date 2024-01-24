@@ -32,7 +32,6 @@ const getAllTodos: RequestHandler = catchAsync(async (req, res) => {
 const getAllTodosForASpecificUser: RequestHandler = catchAsync(
   async (req, res) => {
     const { email } = req.params;
-    console.log('email in controller is', email);
 
     const result = await TodoServices.getAllTodosForASpecificUserFromDB(
       email as string,

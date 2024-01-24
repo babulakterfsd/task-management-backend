@@ -10,16 +10,20 @@ const auth = (...requiredRoles: TUserRole[]) => {
     const token = req?.headers?.authorization?.split(' ')[1];
 
     if (!token) {
-      console.log('token paoa jay nai auth checking e');
-
       throw new JsonWebTokenError('Unauthorized Access!');
     }
 
     // checking token is valid or not
-    const decodedUser = jwt.verify(
-      token as string,
-      config.jwt_access_secret as string,
-    ) as JwtPayload;
+    let decodedUser: JwtPayload | string;
+
+    try {
+      decodedUser = jwt.verify(
+        token as string,
+        config.jwt_access_secret as string,
+      ) as JwtPayload;
+    } catch (error) {
+      throw new JsonWebTokenError('Unauthorized Access!');
+    }
 
     const { role, email } = decodedUser;
 
