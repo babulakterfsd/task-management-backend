@@ -1,18 +1,28 @@
 import express from 'express';
+import auth from '../../middlewares/auth';
 import validateRequest from '../../middlewares/validateRequest';
 import { TodoControllers } from './todo.controller';
 import { todoSchema } from './todo.validation';
 
 const router = express.Router();
 
-router.put('/:id', TodoControllers.updateTodo);
+router.put('/:id', auth('user'), TodoControllers.updateTodo);
 
-router.delete('/:id', TodoControllers.deleteTodo);
+router.delete('/:id', auth('admin', 'user'), TodoControllers.deleteTodo);
 
-router.get('/:email', TodoControllers.getAllTodosForASpecificUser);
+router.get(
+  '/:email',
+  auth('user'),
+  TodoControllers.getAllTodosForASpecificUser,
+);
 
-router.post('/', validateRequest(todoSchema), TodoControllers.createTodo);
+router.post(
+  '/',
+  auth('user'),
+  validateRequest(todoSchema),
+  TodoControllers.createTodo,
+);
 
-router.get('/', TodoControllers.getAllTodos);
+router.get('/', auth('admin'), TodoControllers.getAllTodos);
 
 export const TodoRoutes = router;

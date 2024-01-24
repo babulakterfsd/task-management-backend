@@ -10,6 +10,8 @@ const auth = (...requiredRoles: TUserRole[]) => {
     const token = req?.headers?.authorization?.split(' ')[1];
 
     if (!token) {
+      console.log('token paoa jay nai auth checking e');
+
       throw new JsonWebTokenError('Unauthorized Access!');
     }
 
